@@ -9,8 +9,13 @@
 
 <script>
     const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
-        .then((result) => go.run(result.instance));
+    WebAssembly.instantiateStreaming(fetch("dist/tinygoDemo.wasm"), go.importObject)
+        .then((result) => {
+            go.run(result.instance)
+
+            // 调用 wasm 模块中导出的函数，并传入参数 "World"
+            window.hello("World");
+        })
 </script>
 
 </body>
