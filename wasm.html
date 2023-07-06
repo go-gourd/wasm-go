@@ -5,16 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-<script src="./wasm_exec.js"></script>
+<script src="src/wasm_exec.js"></script>
 
 <script>
     const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("dist/tinygoDemo.wasm"), go.importObject)
+    WebAssembly.instantiateStreaming(fetch("wasm-go.wasm"), go.importObject)
         .then((result) => {
             go.run(result.instance)
 
             // 调用 wasm 模块中导出的函数，并传入参数 "World"
-            window.hello("World");
+            window.hello("TinyGo");
+
+            const data = window.encryptGo("hello world")
+            console.log(data)
+
+            const data2 = window.decryptGo(data)
+            console.log(data2)
         })
 </script>
 
