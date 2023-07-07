@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"encoding/hex"
+	"encoding/base64"
 )
 
 // EncryptAES 加密
@@ -31,7 +31,9 @@ func EncryptAES(key []byte, plaintext string) (string, error) {
 	mode.CryptBlocks(ciphertext, plaintextBytes)
 
 	// 将密文转换为十六进制字符串
-	ciphertextHex := hex.EncodeToString(ciphertext)
+	//ciphertextHex := hex.EncodeToString(ciphertext)
+
+	ciphertextHex := base64.StdEncoding.EncodeToString(ciphertext)
 
 	return ciphertextHex, nil
 }
@@ -40,7 +42,7 @@ func EncryptAES(key []byte, plaintext string) (string, error) {
 func DecryptAES(key []byte, ciphertextHex string) (string, error) {
 
 	// 将密文转换为字节数组
-	ciphertext, err := hex.DecodeString(ciphertextHex)
+	ciphertext, err := base64.StdEncoding.DecodeString(ciphertextHex)
 	if err != nil {
 		panic(err)
 	}
